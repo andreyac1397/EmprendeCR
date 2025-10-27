@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Presupuesto mensual</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="openIng" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-emerald-600 text-white hover:bg-emerald-700">+ Ingreso</button>
+      <button id="openEgr" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-rose-600 text-white hover:bg-rose-700">+ Egreso</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Menu.html"><span>🏠</span>Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Encabezado -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Presupuesto mensual</h1>
+              <p class="text-slate-600 dark:text-slate-300">Registra ingresos y egresos, y visualiza el balance.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <label class="text-sm">Mes</label>
+              <input id="inMes" type="month" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+            </div>
+          </div>
+        </section>
+
+        <!-- KPIs -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Ingresos</p>
+            <p id="kpiIng" class="mt-2 text-3xl font-bold">₡0</p>
+          </div>
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Egresos</p>
+            <p id="kpiEgr" class="mt-2 text-3xl font-bold">₡0</p>
+          </div>
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Balance</p>
+            <p id="kpiBal" class="mt-2 text-3xl font-bold">₡0</p>
+          </div>
+        </div>
+
+        <!-- Tablas -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Ingresos -->
+          <section class="glass rounded-2xl ring-1 ring-white/50 dark:ring-white/10 overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200/70 dark:border-slate-700/60">
+              <h2 class="text-lg font-semibold">Ingresos</h2>
+              <button id="openIngTop" class="rounded-lg px-3 py-1.5 text-sm bg-emerald-600 text-white hover:bg-emerald-700">+ Agregar</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-100/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200">
+                  <tr>
+                    <th class="text-left px-4 py-3">Fecha</th>
+                    <th class="text-left px-4 py-3">Concepto</th>
+                    <th class="text-right px-4 py-3">Monto</th>
+                    <th class="text-right px-4 py-3">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbIng" class="divide-y divide-slate-200/70 dark:divide-slate-700/60">
+                  <tr>
+                    <td class="px-4 py-3">2025-11-01</td>
+                    <td class="px-4 py-3">Venta local</td>
+                    <td class="px-4 py-3 text-right" data-val="250000">₡250,000</td>
+                    <td class="px-4 py-3 text-right"><button class="text-slate-500 hover:underline btn-del">Eliminar</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Egresos -->
+          <section class="glass rounded-2xl ring-1 ring-white/50 dark:ring-white/10 overflow-hidden">
+            <div class="flex items-center justify-between px-4 py-3 border-b border-slate-200/70 dark:border-slate-700/60">
+              <h2 class="text-lg font-semibold">Egresos</h2>
+              <button id="openEgrTop" class="rounded-lg px-3 py-1.5 text-sm bg-rose-600 text-white hover:bg-rose-700">+ Agregar</button>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="min-w-full text-sm">
+                <thead class="bg-slate-100/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200">
+                  <tr>
+                    <th class="text-left px-4 py-3">Fecha</th>
+                    <th class="text-left px-4 py-3">Concepto</th>
+                    <th class="text-right px-4 py-3">Monto</th>
+                    <th class="text-right px-4 py-3">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="tbEgr" class="divide-y divide-slate-200/70 dark:divide-slate-700/60">
+                  <tr>
+                    <td class="px-4 py-3">2025-11-03</td>
+                    <td class="px-4 py-3">Materia prima</td>
+                    <td class="px-4 py-3 text-right" data-val="120000">₡120,000</td>
+                    <td class="px-4 py-3 text-right"><button class="text-slate-500 hover:underline btn-del">Eliminar</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL INGRESO -->
+  <div id="modalIng" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Agregar ingreso</h3>
+          <button id="closeIng" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formIng" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm">Fecha</label>
+            <input id="iFecha" type="date" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Concepto</label>
+            <input id="iConcepto" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Monto (₡)</label>
+            <input id="iMonto" type="number" step="0.01" min="0" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2 flex justify-end gap-2">
+            <button type="button" id="cancelIng" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-emerald-600 text-white hover:bg-emerald-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EGRESO -->
+  <div id="modalEgr" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Agregar egreso</h3>
+          <button id="closeEgr" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formEgr" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm">Fecha</label>
+            <input id="eFecha" type="date" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Concepto</label>
+            <input id="eConcepto" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Monto (₡)</label>
+            <input id="eMonto" type="number" step="0.01" min="0" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div class="sm:col-span-2 flex justify-end gap-2">
+            <button type="button" id="cancelEgr" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-rose-600 text-white hover:bg-rose-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // Abrir/Cerrar modales
+    const modalIng = document.getElementById('modalIng');
+    const modalEgr = document.getElementById('modalEgr');
+    const openIngBtns = [document.getElementById('openIng'), document.getElementById('openIngTop')].filter(Boolean);
+    const openEgrBtns = [document.getElementById('openEgr'), document.getElementById('openEgrTop')].filter(Boolean);
+    openIngBtns.forEach(b=>b.addEventListener('click', ()=> modalIng.classList.remove('hidden')));
+    openEgrBtns.forEach(b=>b.addEventListener('click', ()=> modalEgr.classList.remove('hidden')));
+    document.getElementById('closeIng')?.addEventListener('click', ()=> modalIng.classList.add('hidden'));
+    document.getElementById('closeEgr')?.addEventListener('click', ()=> modalEgr.classList.add('hidden'));
+    document.getElementById('cancelIng')?.addEventListener('click', ()=> modalIng.classList.add('hidden'));
+    document.getElementById('cancelEgr')?.addEventListener('click', ()=> modalEgr.classList.add('hidden'));
+    modalIng.addEventListener('click', (e)=>{ if(e.target===modalIng) modalIng.classList.add('hidden'); });
+    modalEgr.addEventListener('click', (e)=>{ if(e.target===modalEgr) modalEgr.classList.add('hidden'); });
+
+    // Util
+    const colCR = new Intl.NumberFormat('es-CR');
+
+    // Totales
+    function recalc(){
+      let ing = 0, egr = 0;
+      document.querySelectorAll('#tbIng [data-val]').forEach(td => ing += parseFloat(td.dataset.val||'0'));
+      document.querySelectorAll('#tbEgr [data-val]').forEach(td => egr += parseFloat(td.dataset.val||'0'));
+      document.getElementById('kpiIng').textContent = '₡' + colCR.format(ing);
+      document.getElementById('kpiEgr').textContent = '₡' + colCR.format(egr);
+      document.getElementById('kpiBal').textContent = '₡' + colCR.format(ing - egr);
+    }
+    recalc();
+
+    // Agregar ingreso
+    document.getElementById('formIng')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const f = document.getElementById('iFecha').value || '';
+      const c = document.getElementById('iConcepto').value.trim() || '-';
+      const m = parseFloat(document.getElementById('iMonto').value || '0');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="px-4 py-3">${f}</td>
+        <td class="px-4 py-3">${c}</td>
+        <td class="px-4 py-3 text-right" data-val="${m}">₡${colCR.format(m)}</td>
+        <td class="px-4 py-3 text-right"><button class="text-slate-500 hover:underline btn-del">Eliminar</button></td>`;
+      document.getElementById('tbIng').appendChild(tr);
+      modalIng.classList.add('hidden');
+      e.target.reset();
+      recalc();
+    });
+
+    // Agregar egreso
+    document.getElementById('formEgr')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const f = document.getElementById('eFecha').value || '';
+      const c = document.getElementById('eConcepto').value.trim() || '-';
+      const m = parseFloat(document.getElementById('eMonto').value || '0');
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="px-4 py-3">${f}</td>
+        <td class="px-4 py-3">${c}</td>
+        <td class="px-4 py-3 text-right" data-val="${m}">₡${colCR.format(m)}</td>
+        <td class="px-4 py-3 text-right"><button class="text-slate-500 hover:underline btn-del">Eliminar</button></td>`;
+      document.getElementById('tbEgr').appendChild(tr);
+      modalEgr.classList.add('hidden');
+      e.target.reset();
+      recalc();
+    });
+
+    // Eliminar filas
+    document.addEventListener('click', (e)=>{
+      if(e.target.classList.contains('btn-del')){
+        const tr = e.target.closest('tr');
+        tr?.parentNode?.removeChild(tr);
+        recalc();
+      }
+    });
+  </script>
+</body>
+</html>

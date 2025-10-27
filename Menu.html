@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium border border-slate-300/60 dark:border-slate-600/60 hover:bg-white/70 dark:hover:bg-slate-800/60">+ Nueva tarea</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT (UNA sola grilla) -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Menu.html"><span>🏠</span>Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO (UNICO MAIN) -->
+    <main class="px-4 sm:px-6 pb-12">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- KPIs -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Tareas de hoy</p>
+            <p class="mt-2 text-3xl font-bold">6</p>
+            <p class="text-sm text-slate-500">2 vencen hoy</p>
+          </div>
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Próximos hitos</p>
+            <p class="mt-2 text-3xl font-bold">3</p>
+            <p class="text-sm text-slate-500">Semana actual</p>
+          </div>
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Avance general</p>
+            <div class="mt-3">
+              <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700">
+                <div class="h-2 rounded-full bg-blue-600" style="width:58%"></div>
+              </div>
+              <p class="mt-2 text-sm"><b>58%</b> del plan</p>
+            </div>
+          </div>
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <p class="text-xs uppercase tracking-wider text-slate-500">Capacitaciones</p>
+            <p class="mt-2 text-3xl font-bold">2</p>
+            <p class="text-sm text-slate-500">Esta semana</p>
+          </div>
+        </div>
+
+        <!-- Tareas del día + Hitos -->
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+          <!-- Tareas -->
+          <section class="xl:col-span-2 glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-lg font-semibold">Tareas del día</h2>
+              <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-300">Ver todas</a>
+            </div>
+            <ul class="divide-y divide-slate-200/70 dark:divide-slate-700/60">
+              <li class="py-3 flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600">
+                <div>
+                  <p class="font-medium">Definir insumos críticos</p>
+                  <p class="text-sm text-slate-500">Insumos · Vence hoy 4:00 p. m.</p>
+                </div>
+                <span class="ml-auto text-xs px-2 py-1 rounded-full bg-blue-600/15 text-blue-700 dark:text-blue-300">Alta</span>
+              </li>
+              <li class="py-3 flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600">
+                <div>
+                  <p class="font-medium">Plan semanal Kanban</p>
+                  <p class="text-sm text-slate-500">Tareas · Hoy 2:30 p. m.</p>
+                </div>
+                <span class="ml-auto text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">Media</span>
+              </li>
+              <li class="py-3 flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600">
+                <div>
+                  <p class="font-medium">Revisión de prototipo UI</p>
+                  <p class="text-sm text-slate-500">Diseño · 11:00 a. m.</p>
+                </div>
+                <span class="ml-auto text-xs px-2 py-1 rounded-full bg-amber-600/15 text-amber-700 dark:text-amber-300">Baja</span>
+              </li>
+            </ul>
+          </section>
+
+          <!-- Hitos -->
+          <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-center justify-between mb-3">
+              <h2 class="text-lg font-semibold">Próximos hitos</h2>
+              <a href="#" class="text-sm text-blue-700 hover:underline dark:text-blue-300">Ver cronograma</a>
+            </div>
+            <ol class="space-y-3">
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2 w-2 rounded-full bg-blue-600"></span>
+                <div>
+                  <p class="font-medium">Cierre de modelado</p>
+                  <p class="text-sm text-slate-500">02 nov 2025 · Hito 2</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2 w-2 rounded-full bg-emerald-600"></span>
+                <div>
+                  <p class="font-medium">MVP listo</p>
+                  <p class="text-sm text-slate-500">30 nov 2025 · Hito 3</p>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <span class="mt-1 h-2 w-2 rounded-full bg-rose-600"></span>
+                <div>
+                  <p class="font-medium">Presentación final</p>
+                  <p class="text-sm text-slate-500">13 dic 2025 · Hito 4</p>
+                </div>
+              </li>
+            </ol>
+          </section>
+        </div>
+
+        <!-- Avance del Gantt -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-semibold">Avance del Gantt</h2>
+            <div class="flex items-center gap-2 text-sm">
+              <button class="rounded-lg px-3 py-1 border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Mes</button>
+              <button class="rounded-lg px-3 py-1 border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Semana</button>
+            </div>
+          </div>
+          <div class="space-y-4">
+            <div>
+              <div class="flex items-center justify-between text-sm"><span>Fase 1 · Análisis</span><span>100%</span></div>
+              <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700"><div class="h-2 rounded-full bg-emerald-600" style="width:100%"></div></div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm"><span>Fase 2 · Modelado y Diseño</span><span>85%</span></div>
+              <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700"><div class="h-2 rounded-full bg-blue-600" style="width:85%"></div></div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm"><span>Fase 3 · Construcción</span><span>40%</span></div>
+              <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700"><div class="h-2 rounded-full bg-amber-600" style="width:40%"></div></div>
+            </div>
+            <div>
+              <div class="flex items-center justify-between text-sm"><span>Fase 4 · Cierre</span><span>10%</span></div>
+              <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700"><div class="h-2 rounded-full bg-rose-600" style="width:10%"></div></div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Accesos rápidos -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <a href="#" class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10 hover:shadow-lg transition">
+            <p class="font-semibold">+ Nueva tarea</p>
+            <p class="text-sm text-slate-500">Agregar rápidamente una actividad</p>
+          </a>
+          <a href="#" class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10 hover:shadow-lg transition">
+            <p class="font-semibold">Registrar insumo</p>
+            <p class="text-sm text-slate-500">Carga o edición de inventario</p>
+          </a>
+          <a href="#" class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10 hover:shadow-lg transition">
+            <p class="font-semibold">Abrir calendario</p>
+            <p class="text-sm text-slate-500">Ver el mes y los hitos</p>
+          </a>
+          <a href="#" class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10 hover:shadow-lg transition">
+            <p class="font-semibold">Reportes</p>
+            <p class="text-sm text-slate-500">Descargar PDFs y resúmenes</p>
+          </a>
+        </div>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Toggle oscuro/claro
+    document.getElementById('modeBtn')?.addEventListener('click', () => {
+      const c = document.documentElement.classList;
+      c.toggle('dark');
+    });
+
+    // Toggle sidebar en móvil
+    const btn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    btn?.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Requisitos & Documentos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="openNewBtn" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700">+ Nuevo requisito</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Menu.html"><span>🏠</span>Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Título + progreso -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Requisitos & Documentos</h1>
+              <p class="text-slate-600 dark:text-slate-300">Checklist del proyecto y adjuntos de respaldo.</p>
+            </div>
+            <div class="flex items-center gap-3">
+              <div class="w-56">
+                <div class="h-2 rounded-full bg-slate-200 dark:bg-slate-700">
+                  <div id="bar" class="h-2 rounded-full bg-blue-600" style="width:0%"></div>
+                </div>
+                <p id="lblProg" class="text-sm mt-1 text-right">0% completo</p>
+              </div>
+              <button id="openNewBtnTop" class="rounded-xl bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-blue-700">+ Nuevo requisito</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Checklist -->
+        <section class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <h3 class="text-sm font-semibold mb-3">Requisitos (A–M)</h3>
+            <ul id="listA" class="space-y-3 text-sm">
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Acta constitutiva</p>
+                  <p class="text-slate-500">Documento legal de creación de la empresa.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Cédula jurídica</p>
+                  <p class="text-slate-500">Registro nacional actualizado.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Contrato de arrendamiento</p>
+                  <p class="text-slate-500">Dirección del local y plazo vigente.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+          <div class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <h3 class="text-sm font-semibold mb-3">Requisitos (N–Z)</h3>
+            <ul id="listB" class="space-y-3 text-sm">
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Permiso sanitario</p>
+                  <p class="text-slate-500">Ministerio de Salud – resolución vigente.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Póliza de riesgos del trabajo</p>
+                  <p class="text-slate-500">INS – cobertura al día.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+              <li class="flex items-start gap-3">
+                <input type="checkbox" class="mt-1 h-4 w-4 chk">
+                <div class="flex-1">
+                  <p class="font-medium">Registro de marca (opcional)</p>
+                  <p class="text-slate-500">Propiedad Industrial – solicitud/registro.</p>
+                  <div class="mt-2 flex items-center gap-2">
+                    <input type="file" class="text-xs">
+                    <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- Notas / Adjuntos generales -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <h3 class="text-sm font-semibold mb-3">Notas / Adjuntos generales</h3>
+          <textarea rows="4" class="w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" placeholder="Notas adicionales, links a carpetas, etc."></textarea>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL NUEVO REQUISITO -->
+  <div id="modalNew" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Nuevo requisito</h3>
+          <button id="closeNew" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formNew" class="grid grid-cols-1 gap-4">
+          <div>
+            <label class="text-sm">Título</label>
+            <input id="rTitulo" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div>
+            <label class="text-sm">Descripción</label>
+            <textarea id="rDesc" rows="3" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600"></textarea>
+          </div>
+          <div class="flex justify-end gap-2">
+            <button type="button" id="cancelNew" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // Progreso
+    function updateProgress(){
+      const checks = [...document.querySelectorAll('.chk')];
+      const done = checks.filter(c => c.checked).length;
+      const total = checks.length || 1;
+      const pct = Math.round(done * 100 / total);
+      document.getElementById('bar').style.width = pct + '%';
+      document.getElementById('lblProg').textContent = pct + '% completo';
+    }
+    document.addEventListener('change', (e)=>{ if(e.target.classList.contains('chk')) updateProgress(); });
+    updateProgress();
+
+    // Modal Nuevo requisito
+    const modal = document.getElementById('modalNew');
+    const openBtns = [document.getElementById('openNewBtn'), document.getElementById('openNewBtnTop')].filter(Boolean);
+    const closeBtns = [document.getElementById('closeNew'), document.getElementById('cancelNew')];
+    openBtns.forEach(b => b.addEventListener('click', () => modal.classList.remove('hidden')));
+    closeBtns.forEach(b => b?.addEventListener('click', () => modal.classList.add('hidden')));
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.add('hidden'); });
+
+    // Guardar nuevo requisito -> agrega a la primera lista
+    document.getElementById('formNew')?.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const t = document.getElementById('rTitulo').value.trim();
+      const d = document.getElementById('rDesc').value.trim();
+      if(!t) return;
+
+      const li = document.createElement('li');
+      li.className = 'flex items-start gap-3';
+      li.innerHTML = `
+        <input type="checkbox" class="mt-1 h-4 w-4 chk">
+        <div class="flex-1">
+          <p class="font-medium">${t}</p>
+          <p class="text-slate-500">${d || ''}</p>
+          <div class="mt-2 flex items-center gap-2">
+            <input type="file" class="text-xs">
+            <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Pendiente</span>
+          </div>
+        </div>`;
+      document.getElementById('listA').appendChild(li);
+      modal.classList.add('hidden');
+      e.target.reset();
+      updateProgress();
+    });
+  </script>
+</body>
+</html>

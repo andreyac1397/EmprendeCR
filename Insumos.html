@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Insumos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <!-- Ajusta el src si tu archivo del logo tiene otro nombre -->
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="openNewBtn" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700">+ Nuevo insumo</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Menu.html">🏠 Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Título + acciones -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Insumos</h1>
+            <p class="text-slate-600 dark:text-slate-300">Registro y control de materiales, consumibles y mercancía.</p>
+          </div>
+          <div class="flex gap-2">
+            <button class="rounded-xl border border-slate-300/70 px-3 py-2 text-sm hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Exportar</button>
+            <button id="openNewBtnTop" class="rounded-xl bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-blue-700">+ Nuevo insumo</button>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <section class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+            <div class="flex-1 flex gap-2">
+              <div class="relative flex-1">
+                <input id="searchInput" type="text" class="w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-2.5 pl-10 text-sm dark:bg-slate-800/80 dark:border-slate-600" placeholder="Buscar por código, nombre o categoría">
+                <svg class="absolute left-3 top-2.5" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <select id="filterCat" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todas las categorías</option>
+                <option>Materia prima</option>
+                <option>Empaque</option>
+                <option>Servicios</option>
+              </select>
+              <select id="filterEstado" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todos</option>
+                <option>Activo</option>
+                <option>Inactivo</option>
+                <option>Crítico</option>
+              </select>
+            </div>
+            <div class="flex gap-2">
+              <button id="btnCriticos" class="rounded-xl px-3 py-2 text-sm border border-amber-400/60 text-amber-700 bg-amber-50 dark:bg-amber-900/20 dark:text-amber-300">Ver críticos</button>
+              <button id="btnLimpiar" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Limpiar</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Tabla -->
+        <section class="glass rounded-2xl ring-1 ring-white/50 dark:ring-white/10 overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="min-w-full text-sm">
+              <thead class="bg-slate-100/70 dark:bg-slate-800/60 text-slate-700 dark:text-slate-200">
+                <tr>
+                  <th class="text-left px-4 py-3">Código</th>
+                  <th class="text-left px-4 py-3">Nombre</th>
+                  <th class="text-left px-4 py-3">Categoría</th>
+                  <th class="text-right px-4 py-3">Stock</th>
+                  <th class="text-right px-4 py-3">Mín.</th>
+                  <th class="text-right px-4 py-3">Costo</th>
+                  <th class="text-left px-4 py-3">Ubicación</th>
+                  <th class="text-left px-4 py-3">Estado</th>
+                  <th class="text-right px-4 py-3">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tbodyInsumos" class="divide-y divide-slate-200/70 dark:divide-slate-700/60">
+                <!-- Ejemplos -->
+                <tr>
+                  <td class="px-4 py-3 font-medium">MP-001</td>
+                  <td class="px-4 py-3">Harina 50kg</td>
+                  <td class="px-4 py-3">Materia prima</td>
+                  <td class="px-4 py-3 text-right">18</td>
+                  <td class="px-4 py-3 text-right">15</td>
+                  <td class="px-4 py-3 text-right">₡32,500</td>
+                  <td class="px-4 py-3">Bodega A</td>
+                  <td class="px-4 py-3">
+                    <span class="text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">Activo</span>
+                  </td>
+                  <td class="px-4 py-3 text-right">
+                    <button class="text-blue-700 dark:text-blue-300 hover:underline mr-2">Editar</button>
+                    <button class="text-slate-500 hover:underline">Eliminar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium">EMP-014</td>
+                  <td class="px-4 py-3">Caja corrugada M</td>
+                  <td class="px-4 py-3">Empaque</td>
+                  <td class="px-4 py-3 text-right">9</td>
+                  <td class="px-4 py-3 text-right">20</td>
+                  <td class="px-4 py-3 text-right">₡480</td>
+                  <td class="px-4 py-3">Bodega B</td>
+                  <td class="px-4 py-3">
+                    <span class="text-xs px-2 py-1 rounded-full bg-rose-600/15 text-rose-700 dark:text-rose-300">Crítico</span>
+                  </td>
+                  <td class="px-4 py-3 text-right">
+                    <button class="text-blue-700 dark:text-blue-300 hover:underline mr-2">Editar</button>
+                    <button class="text-slate-500 hover:underline">Eliminar</button>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="px-4 py-3 font-medium">SRV-003</td>
+                  <td class="px-4 py-3">Mantenimiento horno</td>
+                  <td class="px-4 py-3">Servicios</td>
+                  <td class="px-4 py-3 text-right">—</td>
+                  <td class="px-4 py-3 text-right">—</td>
+                  <td class="px-4 py-3 text-right">₡25,000</td>
+                  <td class="px-4 py-3">Proveedor Alfa</td>
+                  <td class="px-4 py-3">
+                    <span class="text-xs px-2 py-1 rounded-full bg-amber-600/15 text-amber-700 dark:text-amber-300">Programado</span>
+                  </td>
+                  <td class="px-4 py-3 text-right">
+                    <button class="text-blue-700 dark:text-blue-300 hover:underline mr-2">Editar</button>
+                    <button class="text-slate-500 hover:underline">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Paginación simple -->
+          <div class="flex items-center justify-between px-4 py-3 border-t border-slate-200/70 dark:border-slate-700/60 text-sm">
+            <p id="countInfo">3 insumos</p>
+            <div class="flex gap-2">
+              <button class="rounded-lg px-3 py-1 border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Anterior</button>
+              <button class="rounded-lg px-3 py-1 border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Siguiente</button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL NUEVO INSUMO -->
+  <div id="modalNew" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Nuevo insumo</h3>
+          <button id="closeNew" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formNew" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label class="text-sm">Código</label>
+            <input id="nCodigo" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div>
+            <label class="text-sm">Nombre</label>
+            <input id="nNombre" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div>
+            <label class="text-sm">Categoría</label>
+            <select id="nCat" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+              <option>Materia prima</option>
+              <option>Empaque</option>
+              <option>Servicios</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-sm">Ubicación</label>
+            <input id="nUbi" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div>
+            <label class="text-sm">Stock</label>
+            <input id="nStock" type="number" min="0" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div>
+            <label class="text-sm">Mínimo</label>
+            <input id="nMin" type="number" min="0" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Costo (₡)</label>
+            <input id="nCosto" type="number" min="0" step="0.01" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div class="sm:col-span-2 flex justify-end gap-2 pt-2">
+            <button type="button" id="cancelNew" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => {
+      sidebar.classList.toggle('hidden');
+    });
+
+    // Abrir/cerrar modal Nuevo
+    const modal = document.getElementById('modalNew');
+    const openBtns = [document.getElementById('openNewBtn'), document.getElementById('openNewBtnTop')].filter(Boolean);
+    const closeBtns = [document.getElementById('closeNew'), document.getElementById('cancelNew')];
+    openBtns.forEach(b => b.addEventListener('click', () => modal.classList.remove('hidden')));
+    closeBtns.forEach(b => b?.addEventListener('click', () => modal.classList.add('hidden')));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    // Buscar / filtrar (básico en cliente)
+    const searchInput = document.getElementById('searchInput');
+    const filterCat = document.getElementById('filterCat');
+    const filterEstado = document.getElementById('filterEstado');
+    const btnCriticos = document.getElementById('btnCriticos');
+    const btnLimpiar = document.getElementById('btnLimpiar');
+    const tbody = document.getElementById('tbodyInsumos');
+    const countInfo = document.getElementById('countInfo');
+
+    function rowMatches(tr, q, cat, est){
+      const t = tr.innerText.toLowerCase();
+      const okQ = !q || t.includes(q);
+      const okCat = !cat || t.includes(cat.toLowerCase());
+      const okEst = !est || t.includes(est.toLowerCase());
+      return okQ && okCat && okEst;
+    }
+    function applyFilters(){
+      const q = (searchInput.value || '').toLowerCase().trim();
+      const cat = filterCat.value || '';
+      const est = filterEstado.value || '';
+      let visible = 0;
+      [...tbody.querySelectorAll('tr')].forEach(tr => {
+        const show = rowMatches(tr, q, cat, est);
+        tr.classList.toggle('hidden', !show);
+        if (show) visible++;
+      });
+      countInfo.textContent = `${visible} insumo${visible!==1?'s':''}`;
+    }
+
+    searchInput?.addEventListener('input', applyFilters);
+    filterCat?.addEventListener('change', applyFilters);
+    filterEstado?.addEventListener('change', applyFilters);
+    btnLimpiar?.addEventListener('click', () => {
+      searchInput.value = ''; filterCat.value=''; filterEstado.value='';
+      applyFilters();
+    });
+    btnCriticos?.addEventListener('click', () => {
+      filterEstado.value = 'Crítico'; applyFilters();
+    });
+
+    // Guardar nuevo insumo (agrega fila a la tabla)
+    const formNew = document.getElementById('formNew');
+    formNew?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const codigo = document.getElementById('nCodigo').value.trim();
+      const nombre = document.getElementById('nNombre').value.trim();
+      const cat = document.getElementById('nCat').value;
+      const ubi = document.getElementById('nUbi').value.trim();
+      const stock = parseFloat(document.getElementById('nStock').value || '0');
+      const min = parseFloat(document.getElementById('nMin').value || '0');
+      const costo = parseFloat(document.getElementById('nCosto').value || '0');
+
+      const critico = !isNaN(stock) && !isNaN(min) && stock < min;
+      const estadoHtml = critico
+        ? '<span class="text-xs px-2 py-1 rounded-full bg-rose-600/15 text-rose-700 dark:text-rose-300">Crítico</span>'
+        : '<span class="text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">Activo</span>';
+
+      const fila = document.createElement('tr');
+      fila.innerHTML = `
+        <td class="px-4 py-3 font-medium">${codigo || '-'}</td>
+        <td class="px-4 py-3">${nombre || '-'}</td>
+        <td class="px-4 py-3">${cat}</td>
+        <td class="px-4 py-3 text-right">${isNaN(stock)? '—' : stock}</td>
+        <td class="px-4 py-3 text-right">${isNaN(min)? '—' : min}</td>
+        <td class="px-4 py-3 text-right">${isNaN(costo)? '—' : '₡'+costo.toLocaleString('es-CR')}</td>
+        <td class="px-4 py-3">${ubi || '-'}</td>
+        <td class="px-4 py-3">${estadoHtml}</td>
+        <td class="px-4 py-3 text-right">
+          <button class="text-blue-700 dark:text-blue-300 hover:underline mr-2">Editar</button>
+          <button class="text-slate-500 hover:underline">Eliminar</button>
+        </td>
+      `;
+      tbody.appendChild(fila);
+
+      // Cerrar modal, limpiar y actualizar contador/filtros
+      modal.classList.add('hidden');
+      formNew.reset();
+      applyFilters();
+    });
+
+    // Inicial
+    applyFilters();
+  </script>
+</body>
+</html>

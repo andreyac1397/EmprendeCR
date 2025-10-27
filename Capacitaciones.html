@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Capacitaciones</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="openNewBtn" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700">+ Nuevo curso</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Menu.html">🏠 Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Título + acciones -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Capacitaciones</h1>
+            <p class="text-slate-600 dark:text-slate-300">Catálogo de cursos, fechas, estado y evidencias.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="openNewBtnTop" class="rounded-xl bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-blue-700">+ Nuevo curso</button>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <section class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+            <div class="flex-1 flex gap-2">
+              <div class="relative flex-1">
+                <input id="searchInput" type="text" class="w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-2.5 pl-10 text-sm dark:bg-slate-800/80 dark:border-slate-600" placeholder="Buscar por nombre o proveedor">
+                <svg class="absolute left-3 top-2.5" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <select id="filterModalidad" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todas las modalidades</option>
+                <option>Online</option>
+                <option>Presencial</option>
+                <option>Mixta</option>
+              </select>
+              <select id="filterEstado" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todos los estados</option>
+                <option>Planificado</option>
+                <option>En curso</option>
+                <option>Completado</option>
+              </select>
+            </div>
+            <button id="btnLimpiar" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Limpiar</button>
+          </div>
+        </section>
+
+        <!-- Catálogo (cards) -->
+        <section id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <!-- Ejemplo 1 -->
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">Finanzas para PYMEs</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">En curso</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">Proveedor: INA · Modalidad: Online · 12 h</p>
+            <p class="text-sm text-slate-500">Fechas: 10–12 nov</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800" data-title="Finanzas para PYMEs" data-prov="INA" data-horas="12" data-fechas="10–12 nov" data-mod="Online">Ver detalle</button>
+              <button class="rounded-lg px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700">Marcar completado</button>
+            </div>
+          </article>
+          <!-- Ejemplo 2 -->
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">Buenas prácticas de manufactura</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-slate-600/10 text-slate-700 dark:text-slate-300">Planificado</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">Proveedor: MEIC · Modalidad: Presencial · 8 h</p>
+            <p class="text-sm text-slate-500">Fecha: 22 nov</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800" data-title="Buenas prácticas de manufactura" data-prov="MEIC" data-horas="8" data-fechas="22 nov" data-mod="Presencial">Ver detalle</button>
+              <button class="rounded-lg px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700">Inscribirme</button>
+            </div>
+          </article>
+          <!-- Ejemplo 3 -->
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">Marketing digital básico</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">Completado</span>
+            </div>
+            <p class="text-sm text-slate-500 mt-1">Proveedor: PROCOMER · Modalidad: Mixta · 10 h</p>
+            <p class="text-sm text-slate-500">Fechas: 02–05 oct</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800" data-title="Marketing digital básico" data-prov="PROCOMER" data-horas="10" data-fechas="02–05 oct" data-mod="Mixta">Ver detalle</button>
+              <button class="rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 dark:border-slate-600/70">Ver evidencia</button>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL NUEVO CURSO -->
+  <div id="modalNew" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Nuevo curso</h3>
+          <button id="closeNew" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formNew" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label class="text-sm">Nombre</label>
+            <input id="cNombre" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div>
+            <label class="text-sm">Proveedor</label>
+            <input id="cProv" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div>
+            <label class="text-sm">Modalidad</label>
+            <select id="cMod" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+              <option>Online</option>
+              <option>Presencial</option>
+              <option>Mixta</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-sm">Horas</label>
+            <input id="cHoras" type="number" min="1" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div>
+            <label class="text-sm">Fechas</label>
+            <input id="cFechas" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" placeholder="ej: 10–12 nov">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Resumen</label>
+            <textarea id="cRes" rows="3" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600"></textarea>
+          </div>
+          <div class="sm:col-span-2 flex justify-end gap-2 pt-2">
+            <button type="button" id="cancelNew" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DETALLE/EVIDENCIAS -->
+  <div id="modalDet" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-20 w-[92%] max-w-2xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between">
+          <h3 id="dTitulo" class="text-lg font-semibold">Detalle del curso</h3>
+          <button id="closeDet" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <div class="mt-3 grid sm:grid-cols-2 gap-3 text-sm">
+          <p><b>Proveedor:</b> <span id="dProv">—</span></p>
+          <p><b>Modalidad:</b> <span id="dMod">—</span></p>
+          <p><b>Horas:</b> <span id="dHoras">—</span></p>
+          <p><b>Fechas:</b> <span id="dFechas">—</span></p>
+        </div>
+        <div class="mt-4">
+          <p class="text-sm text-slate-600 dark:text-slate-300">Evidencias (certificado, foto, PDF):</p>
+          <div class="mt-2 flex items-center gap-2">
+            <input type="file" id="fileEvi" class="text-sm">
+            <button id="addEvi" class="rounded-lg px-3 py-1.5 text-sm bg-blue-600 text-white hover:bg-blue-700">Subir</button>
+          </div>
+          <ul id="listEvi" class="mt-3 space-y-2 text-sm"></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+    });
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // Abrir/cerrar modal Nuevo
+    const modal = document.getElementById('modalNew');
+    const openBtns = [document.getElementById('openNewBtn'), document.getElementById('openNewBtnTop')].filter(Boolean);
+    const closeBtns = [document.getElementById('closeNew'), document.getElementById('cancelNew')];
+    openBtns.forEach(b => b.addEventListener('click', () => modal.classList.remove('hidden')));
+    closeBtns.forEach(b => b?.addEventListener('click', () => modal.classList.add('hidden')));
+    modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+    // Filtros simples (cliente)
+    const searchInput = document.getElementById('searchInput');
+    const filterModalidad = document.getElementById('filterModalidad');
+    const filterEstado = document.getElementById('filterEstado');
+    const btnLimpiar = document.getElementById('btnLimpiar');
+    function applyFilters(){
+      const q = (searchInput.value || '').toLowerCase().trim();
+      const mod = (filterModalidad.value || '').toLowerCase();
+      const est = (filterEstado.value || '').toLowerCase();
+      document.querySelectorAll('#cardsGrid article').forEach(card => {
+        const t = card.innerText.toLowerCase();
+        const ok = (!q || t.includes(q)) && (!mod || t.includes(mod)) && (!est || t.includes(est));
+        card.classList.toggle('hidden', !ok);
+      });
+    }
+    [searchInput, filterModalidad, filterEstado].forEach(el => el?.addEventListener('input', applyFilters));
+    btnLimpiar?.addEventListener('click', () => { searchInput.value=''; filterModalidad.value=''; filterEstado.value=''; applyFilters(); });
+
+    // Modal detalle
+    const modalDet = document.getElementById('modalDet');
+    const closeDet = document.getElementById('closeDet');
+    document.querySelectorAll('.openDetail').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById('dTitulo').textContent = btn.dataset.title;
+        document.getElementById('dProv').textContent = btn.dataset.prov;
+        document.getElementById('dHoras').textContent = btn.dataset.horas + ' h';
+        document.getElementById('dFechas').textContent = btn.dataset.fechas;
+        document.getElementById('dMod').textContent = btn.dataset.mod;
+        modalDet.classList.remove('hidden');
+      });
+    });
+    closeDet?.addEventListener('click', () => modalDet.classList.add('hidden'));
+    modalDet.addEventListener('click', (e) => { if (e.target === modalDet) modalDet.classList.add('hidden'); });
+
+    // Evidencias mock
+    document.getElementById('addEvi')?.addEventListener('click', () => {
+      const f = document.getElementById('fileEvi');
+      if (!f.files?.length) return;
+      const li = document.createElement('li');
+      li.textContent = '• ' + f.files[0].name;
+      document.getElementById('listEvi').appendChild(li);
+      f.value = '';
+    });
+  </script>
+</body>
+</html>

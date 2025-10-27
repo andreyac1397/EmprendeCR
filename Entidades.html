@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Entidades / Financiamiento</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass { backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); background: rgba(255,255,255,.7); }
+    @media (prefers-color-scheme: dark){ .glass { background: rgba(17,24,39,.6);} }
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="openNewBtn" class="hidden sm:inline-flex rounded-lg px-3 py-2 text-sm font-medium bg-blue-600 text-white hover:bg-blue-700">+ Nueva entidad</button>
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Menu.html">🏠 Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Título + acciones -->
+        <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-3">
+          <div>
+            <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Entidades & Financiamiento</h1>
+            <p class="text-slate-600 dark:text-slate-300">Directorio por tipo y beneficio: bancos, gobierno, ONG, programas.</p>
+          </div>
+          <div class="flex gap-2">
+            <button id="openNewBtnTop" class="rounded-xl bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-blue-700">+ Nueva entidad</button>
+          </div>
+        </div>
+
+        <!-- Filtros -->
+        <section class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col lg:flex-row gap-3 lg:items-center lg:justify-between">
+            <div class="flex-1 flex gap-2">
+              <div class="relative flex-1">
+                <input id="searchInput" type="text" class="w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-2.5 pl-10 text-sm dark:bg-slate-800/80 dark:border-slate-600" placeholder="Buscar por nombre, programa o descripción">
+                <svg class="absolute left-3 top-2.5" width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M21 21l-4.3-4.3M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              </div>
+              <select id="filterTipo" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todos los tipos</option>
+                <option>Banco</option>
+                <option>Gobierno</option>
+                <option>ONG</option>
+                <option>Programa</option>
+              </select>
+              <select id="filterBenef" class="rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2.5 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+                <option value="">Todos los beneficios</option>
+                <option>Crédito</option>
+                <option>Capacitación</option>
+                <option>Subvención</option>
+                <option>Asesoría</option>
+              </select>
+            </div>
+            <button id="btnLimpiar" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Limpiar</button>
+          </div>
+        </section>
+
+        <!-- Directorio (cards) -->
+        <section id="cardsGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">Banco PYMECR</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-blue-600/15 text-blue-700 dark:text-blue-300">Crédito</span>
+            </div>
+            <p class="text-sm text-slate-500">Tipo: Banco · Tasa preferencial para PYMEs · Monto hasta ₡30M</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800"
+                data-title="Banco PYMECR" data-tipo="Banco" data-benef="Crédito" data-contacto="(506) 2222-0000 · pymes@bpyme.cr"
+                data-desc="Línea de crédito productiva con tasa preferencial, períodos de gracia y asesoría financiera.">Ver detalle</button>
+              <a href="#" class="rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 dark:border-slate-600/70">Sitio</a>
+            </div>
+          </article>
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">MEIC – Programa Crecer</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-emerald-600/15 text-emerald-700 dark:text-emerald-300">Capacitación</span>
+            </div>
+            <p class="text-sm text-slate-500">Tipo: Gobierno · Talleres y mentorías para formalización y ventas</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800"
+                data-title="MEIC – Programa Crecer" data-tipo="Gobierno" data-benef="Capacitación" data-contacto="meic.go.cr · (506) 2202-0000"
+                data-desc="Ciclo de talleres, mentorías y acompañamiento para crecimiento y formalización de PYMEs.">Ver detalle</button>
+              <a href="#" class="rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 dark:border-slate-600/70">Sitio</a>
+            </div>
+          </article>
+          <article class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+            <div class="flex items-start justify-between">
+              <h3 class="text-lg font-semibold">ONG Impulsa</h3>
+              <span class="text-xs px-2 py-1 rounded-full bg-rose-600/15 text-rose-700 dark:text-rose-300">Subvención</span>
+            </div>
+            <p class="text-sm text-slate-500">Tipo: ONG · Fondos semilla para proyectos productivos</p>
+            <div class="mt-3 flex gap-2">
+              <button class="openDetail rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800"
+                data-title="ONG Impulsa" data-tipo="ONG" data-benef="Subvención" data-contacto="contacto@impulsa.org"
+                data-desc="Convocatoria anual de fondos no reembolsables para emprendimientos con impacto local.">Ver detalle</button>
+              <a href="#" class="rounded-lg px-3 py-1.5 text-sm border border-slate-300/70 dark:border-slate-600/70">Sitio</a>
+            </div>
+          </article>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL NUEVA ENTIDAD -->
+  <div id="modalNew" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-24 w-[92%] max-w-xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-lg font-semibold">Nueva entidad</h3>
+          <button id="closeNew" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <form id="formNew" class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div class="sm:col-span-2">
+            <label class="text-sm">Nombre</label>
+            <input id="eNombre" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600" required>
+          </div>
+          <div>
+            <label class="text-sm">Tipo</label>
+            <select id="eTipo" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+              <option>Banco</option>
+              <option>Gobierno</option>
+              <option>ONG</option>
+              <option>Programa</option>
+            </select>
+          </div>
+          <div>
+            <label class="text-sm">Beneficio</label>
+            <select id="eBenef" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+              <option>Crédito</option>
+              <option>Capacitación</option>
+              <option>Subvención</option>
+              <option>Asesoría</option>
+            </select>
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Contacto</label>
+            <input id="eContacto" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600">
+          </div>
+          <div class="sm:col-span-2">
+            <label class="text-sm">Descripción</label>
+            <textarea id="eDesc" rows="3" class="mt-1 w-full rounded-xl border border-slate-300/70 bg-white/80 px-3 py-2 text-sm dark:bg-slate-800/80 dark:border-slate-600"></textarea>
+          </div>
+          <div class="sm:col-span-2 flex justify-end gap-2 pt-2">
+            <button type="button" id="cancelNew" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Cancelar</button>
+            <button class="rounded-xl px-3 py-2 text-sm bg-blue-600 text-white hover:bg-blue-700">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL DETALLE ENTIDAD -->
+  <div id="modalDet" class="fixed inset-0 z-[60] hidden">
+    <div class="absolute inset-0 bg-slate-900/50"></div>
+    <div class="relative mx-auto mt-20 w-[92%] max-w-2xl">
+      <div class="glass rounded-2xl p-6 ring-1 ring-white/50 dark:ring-white/10">
+        <div class="flex items-center justify-between">
+          <h3 id="dTitulo" class="text-lg font-semibold">Detalle de entidad</h3>
+          <button id="closeDet" class="rounded-lg px-2 py-1 border border-slate-300/70 dark:border-slate-600/70">✕</button>
+        </div>
+        <div class="mt-3 grid sm:grid-cols-2 gap-3 text-sm">
+          <p><b>Tipo:</b> <span id="dTipo">—</span></p>
+          <p><b>Beneficio:</b> <span id="dBenef">—</span></p>
+          <p class="sm:col-span-2"><b>Contacto:</b> <span id="dContacto">—</span></p>
+        </div>
+        <div class="mt-3 text-sm">
+          <p id="dDesc" class="text-slate-600 dark:text-slate-300">—</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // Filtros
+    const searchInput = document.getElementById('searchInput');
+    const filterTipo = document.getElementById('filterTipo');
+    const filterBenef = document.getElementById('filterBenef');
+    const btnLimpiar = document.getElementById('btnLimpiar');
+    function applyFilters(){
+      const q = (searchInput.value || '').toLowerCase().trim();
+      const tipo = (filterTipo.value || '').toLowerCase();
+      const benef = (filterBenef.value || '').toLowerCase();
+      document.querySelectorAll('#cardsGrid article').forEach(card => {
+        const t = card.innerText.toLowerCase();
+        const ok = (!q || t.includes(q)) && (!tipo || t.includes(tipo)) && (!benef || t.includes(benef));
+        card.classList.toggle('hidden', !ok);
+      });
+    }
+    [searchInput, filterTipo, filterBenef].forEach(el => el?.addEventListener('input', applyFilters));
+    btnLimpiar?.addEventListener('click', () => { searchInput.value=''; filterTipo.value=''; filterBenef.value=''; applyFilters(); });
+
+    // Modal Nuevo
+    const modal = document.getElementById('modalNew');
+    const openBtns = [document.getElementById('openNewBtn'), document.getElementById('openNewBtnTop')].filter(Boolean);
+    const closeBtns = [document.getElementById('closeNew'), document.getElementById('cancelNew')];
+    openBtns.forEach(b => b.addEventListener('click', () => modal.classList.remove('hidden')));
+    closeBtns.forEach(b => b?.addEventListener('click', () => modal.classList.add('hidden')));
+    modal.addEventListener('click', (e)=>{ if(e.target===modal) modal.classList.add('hidden'); });
+
+    // Modal Detalle
+    const modalDet = document.getElementById('modalDet');
+    document.querySelectorAll('.openDetail').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.getElementById('dTitulo').textContent = btn.dataset.title;
+        document.getElementById('dTipo').textContent = btn.dataset.tipo;
+        document.getElementById('dBenef').textContent = btn.dataset.benef;
+        document.getElementById('dContacto').textContent = btn.dataset.contacto;
+        document.getElementById('dDesc').textContent = btn.dataset.desc;
+        modalDet.classList.remove('hidden');
+      });
+    });
+    document.getElementById('closeDet')?.addEventListener('click', ()=> modalDet.classList.add('hidden'));
+    modalDet.addEventListener('click', e=>{ if(e.target===modalDet) modalDet.classList.add('hidden'); });
+  </script>
+</body>
+</html>

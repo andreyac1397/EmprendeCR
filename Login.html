@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Acceso</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(255,255,255,.75)}
+    @media (prefers-color-scheme: dark){.glass{background:rgba(17,24,39,.65)}}
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900">
+
+  <!-- Header: solo botón (no hay logo aquí) -->
+  <header class="fixed inset-x-0 top-0 z-50 flex justify-end px-6 py-3">
+    <button id="modeBtn"
+      class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-600 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800 transition">
+      Modo oscuro
+    </button>
+  </header>
+
+  <!-- Logo GRANDE fijo al tope-izquierda, detrás del contenido (no tapa nada) -->
+  <img src="zLogoEmprendeCR.png" alt=""
+       class="fixed top-0 left-8 h-[420px] md:h-[480px] w-auto z-10 select-none pointer-events-none">
+
+  <!-- Contenido va por encima del logo -->
+  <main class="relative z-10 min-h-full flex items-center justify-center px-6 pt-28 md:pt-32 pb-16">
+    <div class="grid w-full max-w-6xl grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Lado visual / branding -->
+      <section class="hidden lg:flex items-center justify-center">
+        <div class="relative w-full max-w-md">
+          <div class="absolute -inset-6 rounded-3xl bg-gradient-to-tr from-blue-600/20 via-blue-400/20 to-red-500/20 blur-2xl"></div>
+          <div class="relative glass rounded-3xl p-8 ring-1 ring-white/50 dark:ring-white/10">
+            <h1 class="text-3xl font-bold leading-tight text-slate-800 dark:text-white">Bienvenido a EmprendeCR</h1>
+            <p class="mt-3 text-slate-600 dark:text-slate-300">
+              Planifica tu PYME con <span class="font-medium">insumos</span>, <span class="font-medium">tareas + Gantt</span>,
+              <span class="font-medium">capacitaciones</span> y <span class="font-medium">entidades/financiamiento</span>, todo en un solo lugar.
+            </p>
+            <ul class="mt-6 space-y-3 text-sm text-slate-600 dark:text-slate-300">
+              <li class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-blue-600"></span>Vista de calendario mensual y seguimiento de hitos</li>
+              <li class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-red-500"></span>Control de presupuesto (₡) y reportes listos para imprimir</li>
+              <li class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>Prototipo centrado en usabilidad y foco MVP</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Card de login -->
+      <section class="flex items-center">
+        <div class="w-full max-w-md mx-auto">
+          <div class="relative">
+            <div class="absolute -inset-4 rounded-2xl bg-gradient-to-br from-blue-600/15 to-red-500/15 blur-xl"></div>
+            <div class="relative glass rounded-2xl p-8 shadow-xl ring-1 ring-white/50 dark:ring-white/10">
+              <div class="mb-6">
+                <h2 class="text-2xl font-bold tracking-tight text-slate-800 dark:text-white">Acceso</h2>
+              </div>
+
+              <form id="loginForm" class="space-y-5" action="#" method="post">
+                <div>
+                  <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-200">Correo</label>
+                  <input id="user" name="email" type="text" required
+       			class="mt-2 w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-3 text-slate-900 placeholder-slate-400 		shadow-sm focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-600/20 dark:bg-slate-800/80 					dark:text-slate-100 dark:border-slate-600"
+       			placeholder="usuario (admin)">
+
+                </div>
+
+                <div>
+                  <div class="flex items-center justify-between">
+                    <label for="password" class="block text-sm font-medium text-slate-700 dark:text-slate-200">Contraseña</label>
+                    <a href="#" class="text-xs font-medium text-blue-700 hover:underline dark:text-blue-300">¿Olvidaste tu contraseña?</a>
+                  </div>
+                  <input id="pass" name="password" type="password" required
+       class="mt-2 w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-3 text-slate-900 placeholder-slate-400 shadow-sm focus:border-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-600/20 dark:bg-slate-800/80 dark:text-slate-100 dark:border-slate-600"
+       placeholder="••••••••">
+
+                </div>
+
+                <label class="inline-flex items-center gap-2 text-sm text-slate-600 dark:text-slate-300 cursor-pointer select-none">
+                  <input type="checkbox" class="h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-600">
+                  Recuérdame
+                </label>
+
+                <button type="submit"
+                  class="w-full rounded-xl bg-blue-600 px-4 py-3 text-white font-semibold shadow-lg shadow-blue-600/20 hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-600/30 transition">
+                  Ingresar
+                </button>
+		<p id="loginErr" class="hidden text-sm text-rose-600 mt-2">Credenciales inválidas.</p>
+                <div class="flex items-center gap-3">
+                  <div class="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                  <span class="text-xs text-slate-500 dark:text-slate-400">o</span>
+                  <div class="h-px flex-1 bg-slate-200 dark:bg-slate-700"></div>
+                </div>
+
+                <button type="button"
+                  class="w-full rounded-xl border border-slate-300/70 bg-white/80 px-4 py-3 font-medium text-slate-700 hover:bg-slate-50 focus:outline-none focus:ring-4 focus:ring-slate-200 dark:bg-slate-800/80 dark:text-slate-100 dark:border-slate-600 dark:hover:bg-slate-800">
+                  Continuar con Google
+                </button>
+
+                <p class="text-sm text-slate-600 dark:text-slate-300 text-center">
+                  ¿No tienes cuenta?
+                  <a href="#" class="font-semibold text-blue-700 hover:underline dark:text-blue-300">Crear cuenta</a>
+                </p>
+              </form>
+            </div>
+          </div>
+
+          <p class="mt-6 text-center text-xs text-slate-500 dark:text-slate-400">
+            © 2025 EmprendeCR · Prototipo UI
+          </p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    const btn = document.getElementById('modeBtn');
+    btn.addEventListener('click', () => {
+      const c = document.documentElement.classList;
+      c.toggle('dark');
+      btn.textContent = c.contains('dark') ? 'Modo claro' : 'Modo oscuro';
+    });
+  </script>
+<script>
+// Login demo: admin / 1234
+const form = document.getElementById('loginForm');
+const user = document.getElementById('user');
+const pass = document.getElementById('pass');
+const err  = document.getElementById('loginErr');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const u = (user.value || '').trim().toLowerCase();
+  const p = pass.value || '';
+
+  if (u === 'admin' && p === '1234') {
+    window.location.href = 'menu.html'; // <-- cambia a tu archivo del dashboard
+  } else {
+    if (err) err.classList.remove('hidden');
+    pass.value = '';
+    pass.focus();
+  }
+});
+</script>
+
+</body>
+</html>

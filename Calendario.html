@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es" class="h-full antialiased">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Calendario / Gantt</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%231d4ed8%22/></svg>">
+  <style>
+    .glass{backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);background:rgba(255,255,255,.7)}
+    @media (prefers-color-scheme: dark){.glass{background:rgba(17,24,39,.6)}}
+  </style>
+</head>
+<body class="h-full bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-slate-900 dark:via-slate-900 dark:to-slate-900 text-slate-800 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="fixed inset-x-0 top-0 z-50 flex items-center justify-between px-4 sm:px-6 py-3">
+    <div class="flex items-center gap-3">
+      <button id="menuBtn" class="lg:hidden rounded-lg p-2 border border-slate-300/60 dark:border-slate-600/60" aria-label="Abrir menú">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <img src="zLogoEmprendeCR.png" alt="EmprendeCR" class="h-10 sm:h-12 w-auto select-none pointer-events-none">
+      <span class="text-lg sm:text-xl font-semibold tracking-tight">EmprendeCR</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <button id="modeBtn" class="rounded-full px-3 py-1 text-xs font-medium border border-slate-300/60 text-slate-700 hover:bg-white dark:text-slate-200 dark:border-slate-600/60 dark:hover:bg-slate-800">
+        Modo oscuro
+      </button>
+    </div>
+  </header>
+
+  <!-- LAYOUT -->
+  <div class="pt-20 grid grid-cols-1 lg:grid-cols-[260px,1fr] gap-4">
+
+    <!-- SIDEBAR -->
+    <aside id="sidebar" class="lg:sticky lg:top-20 lg:h-[calc(100vh-5rem)] lg:block hidden px-4 sm:px-6">
+      <nav class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+        <p class="px-3 pb-2 text-xs uppercase tracking-wider text-slate-500 dark:text-slate-400">Menú</p>
+        <ul class="space-y-1 text-sm">
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Menu.html">🏠 Dashboard</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Insumos.html">📦 Insumos</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Tareas.html">✅ Tareas</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-600/10 text-blue-700 dark:text-blue-300" href="Calendario.html">🗓️ Calendario / Gantt</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Capacitaciones.html">🎓 Capacitaciones</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Entidades.html">🏛️ Entidades</a></li>
+          <li><a class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Requisitos.html">📑 Requisitos / Docs</a></li>
+          <li><a class="flex items-center gap-3 px-6 py-2 rounded-xl hover:bg-white/60 dark:hover:bg-slate-800/60" href="Presupuesto.html">₡ Presupuesto</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- CONTENIDO -->
+    <main class="px-4 sm:px-6 pb-14">
+      <div class="max-w-7xl mx-auto space-y-6">
+
+        <!-- Título + controles -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">Calendario / Gantt</h1>
+              <p class="text-slate-600 dark:text-slate-300">Vista mensual o semanal con tareas e hitos. Ajusta fechas y revisa vencimientos.</p>
+            </div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button id="btnHoy" class="rounded-xl px-3 py-2 text-sm border border-slate-300/70 hover:bg-white dark:border-slate-600/70 dark:hover:bg-slate-800">Hoy</button>
+              <div class="flex rounded-xl overflow-hidden border border-slate-300/70 dark:border-slate-600/70">
+                <button id="btnPrev" class="px-3 py-2 text-sm hover:bg-white dark:hover:bg-slate-800">◀</button>
+                <div id="lblMes" class="px-4 py-2 text-sm font-semibold min-w-[160px] text-center">—</div>
+                <button id="btnNext" class="px-3 py-2 text-sm hover:bg-white dark:hover:bg-slate-800">▶</button>
+              </div>
+              <div class="flex rounded-xl overflow-hidden border border-slate-300/70 dark:border-slate-600/70">
+                <button id="btnMes" class="px-3 py-2 text-sm bg-blue-600 text-white">Mes</button>
+                <button id="btnSem" class="px-3 py-2 text-sm">Semana</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CALENDARIO -->
+        <section class="glass rounded-2xl p-4 ring-1 ring-white/50 dark:ring-white/10">
+          <!-- Encabezados de semana -->
+          <div class="grid grid-cols-7 gap-1 text-xs font-medium px-2 pb-2 text-slate-500 dark:text-slate-400">
+            <div class="text-center">Lun</div><div class="text-center">Mar</div><div class="text-center">Mié</div>
+            <div class="text-center">Jue</div><div class="text-center">Vie</div><div class="text-center">Sáb</div><div class="text-center">Dom</div>
+          </div>
+          <!-- Contenedor Mes/Semana -->
+          <div id="calContainer" class="min-h-[480px]">
+            <!-- Se renderiza por JS -->
+          </div>
+        </section>
+
+        <!-- GANTT DEL MES -->
+        <section class="glass rounded-2xl p-5 ring-1 ring-white/50 dark:ring-white/10">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="text-lg font-semibold">Gantt del mes</h2>
+            <span class="text-sm text-slate-500 dark:text-slate-400">Duraciones relativas al mes visible</span>
+          </div>
+          <div id="ganttList" class="space-y-3">
+            <!-- Fila por tarea -->
+          </div>
+          <div class="mt-3 relative h-2 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden">
+            <div id="ganttScale" class="absolute inset-y-0 left-0 bg-gradient-to-r from-transparent via-white/30 to-transparent opacity-40"></div>
+          </div>
+        </section>
+
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // Modo oscuro
+    document.getElementById('modeBtn')?.addEventListener('click', () => document.documentElement.classList.toggle('dark'));
+    // Sidebar móvil
+    const menuBtn = document.getElementById('menuBtn');
+    const sidebar = document.getElementById('sidebar');
+    menuBtn?.addEventListener('click', () => sidebar.classList.toggle('hidden'));
+
+    // --------- Estado y datos demo ---------
+    const state = {
+      date: new Date(),           // fecha enfocada
+      view: 'month',              // 'month' | 'week'
+    };
+
+    // Eventos de ejemplo (día) y spans (rango)
+    const events = [
+      { title: 'Reunión proveedor', date: '2025-11-05', color: 'bg-blue-600' },
+      { title: 'Entrega informe',   date: '2025-11-12', color: 'bg-emerald-600' },
+      { title: 'Pago alquiler',     date: '2025-11-01', color: 'bg-amber-600' },
+      { title: 'Demo MVP',          date: '2025-11-21', color: 'bg-rose-600' },
+      { title: 'Campaña RRSS',      date: '2025-11-28', color: 'bg-indigo-600' },
+    ];
+    const spans = [
+      { title: 'Sprint Diseño',  start: '2025-11-02', end: '2025-11-10', color: 'bg-blue-600' },
+      { title: 'Pruebas UI',     start: '2025-11-11', end: '2025-11-18', color: 'bg-amber-600' },
+      { title: 'Ajustes finales',start: '2025-11-19', end: '2025-11-30', color: 'bg-emerald-600' },
+    ];
+
+    // --------- Utilitarios de fecha ---------
+    const pad = n => (n<10? '0'+n : ''+n);
+    const ymd = d => d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
+    const parse = s => { const [Y,M,D]=s.split('-').map(Number); return new Date(Y, M-1, D); };
+    const sameDay = (a,b) => a.getFullYear()===b.getFullYear() && a.getMonth()===b.getMonth() && a.getDate()===b.getDate();
+
+    // --------- Render Mes ---------
+    function renderMonth() {
+      const container = document.getElementById('calContainer');
+      container.innerHTML = '';
+
+      const year = state.date.getFullYear();
+      const month = state.date.getMonth();
+      const first = new Date(year, month, 1);
+      const startIdx = (first.getDay() + 6) % 7; // Lunes=0
+      const daysInMonth = new Date(year, month+1, 0).getDate();
+      const prevDays = startIdx;
+      const totalCells = 42;
+
+      const grid = document.createElement('div');
+      grid.className = 'grid grid-cols-7 gap-1';
+
+      for (let i=0; i<totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'min-h-[96px] rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/60 p-2 flex flex-col';
+        const dayNum = document.createElement('div');
+        dayNum.className = 'text-xs font-semibold text-slate-500 dark:text-slate-300';
+
+        const dayDate = new Date(year, month, 1 - prevDays + i);
+        const inMonth = (dayDate.getMonth() === month);
+        dayNum.textContent = dayDate.getDate();
+        if (!inMonth) {
+          cell.classList.add('opacity-40');
+        }
+        if (sameDay(dayDate, new Date())) {
+          dayNum.classList.add('text-blue-700','dark:text-blue-300');
+          const dot = document.createElement('span');
+          dot.className = 'ml-1 inline-block h-1.5 w-1.5 rounded-full bg-blue-600';
+          dayNum.appendChild(dot);
+        }
+
+        // eventos de un día
+        const evBox = document.createElement('div');
+        evBox.className = 'mt-1 space-y-1';
+        const key = ymd(dayDate);
+        events.filter(e => e.date === key).forEach(e => {
+          const pill = document.createElement('div');
+          pill.className = `text-[11px] ${e.color} text-white rounded-md px-2 py-1 truncate`;
+          pill.textContent = e.title;
+          evBox.appendChild(pill);
+        });
+
+        cell.appendChild(dayNum);
+        cell.appendChild(evBox);
+        grid.appendChild(cell);
+      }
+      container.appendChild(grid);
+
+      // Etiqueta de mes
+      const lbl = document.getElementById('lblMes');
+      const m = state.date.toLocaleString('es-CR', { month: 'long' });
+      lbl.textContent = (m.charAt(0).toUpperCase()+m.slice(1)) + ' ' + year;
+
+      renderGanttMonth();
+    }
+
+    // --------- Render Semana ---------
+    function renderWeek() {
+      const container = document.getElementById('calContainer');
+      container.innerHTML = '';
+
+      const d = new Date(state.date);
+      const dow = (d.getDay()+6)%7; // lunes=0
+      const monday = new Date(d); monday.setDate(d.getDate()-dow);
+
+      const grid = document.createElement('div');
+      grid.className = 'grid grid-cols-7 gap-1';
+
+      for (let i=0;i<7;i++){
+        const day = new Date(monday); day.setDate(monday.getDate()+i);
+        const col = document.createElement('div');
+        col.className = 'min-h-[320px] rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/70 dark:bg-slate-800/60 p-2 flex flex-col';
+
+        const head = document.createElement('div');
+        head.className = 'text-sm font-semibold text-slate-700 dark:text-slate-200';
+        head.textContent = day.toLocaleDateString('es-CR', { weekday:'short'}) + ' ' + day.getDate();
+        if (sameDay(day, new Date())) {
+          head.classList.add('text-blue-700','dark:text-blue-300');
+        }
+
+        const evBox = document.createElement('div');
+        evBox.className = 'mt-2 space-y-2';
+        const key = ymd(day);
+        events.filter(e => e.date === key).forEach(e => {
+          const card = document.createElement('div');
+          card.className = `rounded-lg ${e.color} text-white px-3 py-2 text-[13px] shadow-sm`;
+          card.textContent = e.title;
+          evBox.appendChild(card);
+        });
+
+        col.appendChild(head);
+        col.appendChild(evBox);
+        grid.appendChild(col);
+      }
+      container.appendChild(grid);
+
+      // etiqueta
+      const end = new Date(monday); end.setDate(monday.getDate()+6);
+      const lbl = document.getElementById('lblMes');
+      lbl.textContent = `${monday.toLocaleDateString('es-CR',{day:'2-digit',month:'short'})} – ${end.toLocaleDateString('es-CR',{day:'2-digit',month:'short',year:'numeric'})}`;
+
+      renderGanttMonth(); // mantenemos el gantt del mes actual
+    }
+
+    // --------- GANTT (en base al mes visible) ---------
+    function renderGanttMonth(){
+      const cont = document.getElementById('ganttList');
+      cont.innerHTML = '';
+
+      const y = state.date.getFullYear();
+      const m = state.date.getMonth();
+      const monthStart = new Date(y, m, 1);
+      const monthEnd = new Date(y, m+1, 0);
+      const totalDays = (monthEnd - monthStart) / (1000*60*60*24) + 1;
+
+      spans.forEach(sp => {
+        // rango intersecado con mes
+        const s = parse(sp.start), e = parse(sp.end);
+        const start = s < monthStart ? monthStart : s;
+        const end = e > monthEnd ? monthEnd : e;
+
+        const from = (start - monthStart) / (1000*60*60*24);
+        const len  = ((end - start) / (1000*60*60*24)) + 1;
+
+        const row = document.createElement('div');
+        row.className = 'relative rounded-xl border border-slate-200/70 dark:border-slate-700/60 bg-white/60 dark:bg-slate-800/60 p-3 overflow-hidden';
+
+        const label = document.createElement('div');
+        label.className = 'text-sm font-medium mb-2';
+        label.textContent = sp.title + ` (${sp.start} → ${sp.end})`;
+        row.appendChild(label);
+
+        const barWrap = document.createElement('div');
+        barWrap.className = 'relative h-8 rounded-full bg-slate-200 dark:bg-slate-700 overflow-hidden';
+        const bar = document.createElement('div');
+        bar.className = `absolute top-0 h-8 ${sp.color} text-white text-xs flex items-center px-2`;
+        const leftPct = Math.max(0, Math.min(100, (from/totalDays)*100));
+        const widthPct = Math.max(2, Math.min(100-leftPct, (len/totalDays)*100));
+        bar.style.left = leftPct + '%';
+        bar.style.width = widthPct + '%';
+        bar.textContent = sp.title;
+        barWrap.appendChild(bar);
+        row.appendChild(barWrap);
+
+        cont.appendChild(row);
+      });
+
+      // Escala sutil
+      const scale = document.getElementById('ganttScale');
+      const stripes = 6;
+      let grad = 'to right';
+      // (decorativo, ya definido por clase)
+    }
+
+    // --------- Navegación y vista ----------
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnHoy  = document.getElementById('btnHoy');
+    const btnMes  = document.getElementById('btnMes');
+    const btnSem  = document.getElementById('btnSem');
+
+    function go(deltaMonths){
+      state.date.setMonth(state.date.getMonth()+deltaMonths);
+      draw();
+    }
+    btnPrev.addEventListener('click', ()=> go(-1));
+    btnNext.addEventListener('click', ()=> go(+1));
+    btnHoy.addEventListener('click', ()=> { state.date = new Date(); draw(); });
+
+    btnMes.addEventListener('click', ()=>{
+      state.view = 'month';
+      btnMes.classList.add('bg-blue-600','text-white');
+      btnSem.classList.remove('bg-blue-600','text-white');
+      draw();
+    });
+    btnSem.addEventListener('click', ()=>{
+      state.view = 'week';
+      btnSem.classList.add('bg-blue-600','text-white');
+      btnMes.classList.remove('bg-blue-600','text-white');
+      draw();
+    });
+
+    function draw(){
+      if(state.view==='month') renderMonth(); else renderWeek();
+    }
+    draw();
+  </script>
+</body>
+</html>
