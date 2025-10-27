@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EmprendeCR · Inicio</title>
+
+  <!-- ⬇️ CAMBIA aquí si tu login se llama distinto (p.ej. Acceso.html) -->
+  <script>
+    const LOGIN_PAGE = 'login.html'; // <-- cámbialo si es necesario
+    // Redirección inmediata (sin dejar historial)
+    window.location.replace(LOGIN_PAGE);
+  </script>
+
+  <!-- Fallback si JS está desactivado -->
+  <meta http-equiv="refresh" content="0; url=login.html">
+  <style>
+    html,body{height:100%;margin:0}
+    body{display:flex;align-items:center;justify-content:center;font-family:system-ui,Segoe UI,Roboto,Arial,sans-serif;background:#0f172a;color:#e2e8f0}
+    .card{padding:20px 24px;border-radius:16px;background:rgba(255,255,255,.06);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.12);text-align:center}
+    .spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.25);border-top-color:#60a5fa;border-radius:50%;margin:0 auto 12px;animation:sp 1s linear infinite}
+    @keyframes sp{to{transform:rotate(360deg)}}
+    a{color:#93c5fd}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="spin"></div>
+    <div>Redirigiendo al acceso…</div>
+    <div style="margin-top:8px;font-size:14px">
+      Si no ocurre automáticamente, <a href="login.html">haz clic aquí</a>.
+    </div>
+  </div>
+</body>
+</html>
